@@ -1,0 +1,21 @@
+<div class="card">
+  <div class="card__header">
+    <h3>{{book.name}}</h3>
+    <p class="card__year">{{
+      book.year < 0 ?
+        -book.year + ' г до н.э.':
+        book.year + ' г'
+      }}</p>
+  </div>
+  <div class="card__info">
+    <p class="card__author">{{book.author}}</p>
+    <div class="card__description">{{book.description}}</div>
+  </div>
+  <div class="card__genres">
+  <span class="card__genre" *ngFor="let genre of book.genres; index as i">{{genre}}</span>
+  </div>
+    <div class="card__buttons">
+  <button class="card__button">Редактировать</button>
+  <button class="card__button card__button_delete">Удалить</button>
+  </div>
+</div>

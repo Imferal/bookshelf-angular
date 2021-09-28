@@ -1,0 +1,54 @@
+<form class="addBook-form" [formGroup]="form" (ngSubmit)="submit()">
+  <h1>Добавить книгу</h1>
+
+  <div class="form-control">
+    <label>Название книги</label>
+    <input
+      type="text"
+      placeholder="Название книги"
+      formControlName="name"
+    >
+    <div class="validation"></div>
+  </div>
+
+  <div class="form-control">
+    <label>Автор</label>
+    <input
+      type="text"
+      placeholder="Автор"
+      formControlName="author"
+    >
+    <div class="validation"></div>
+  </div>
+
+  <div class="form-control">
+    <label>Жанр</label>
+    <select formControlName="genre">
+      <option value="prose" selected>Проза</option>
+      <option value="poetry">Поэзия</option>
+    </select>
+    <div class="validation"></div>
+  </div>
+
+  <div class="form-control">
+    <label>Год</label>
+    <input
+      type="number"
+      placeholder="Год"
+      formControlName="year"
+    >
+    <div class="validation"></div>
+  </div>
+
+  <div class="form-control">
+    <label>Описание</label>
+    <textarea
+      placeholder="Описание"
+      formControlName="description"
+    ></textarea>
+    <div class="validation"></div>
+  </div>
+
+  <button class="button" type="submit" [disabled]="form.invalid">Добавить</button>
+
+</form>

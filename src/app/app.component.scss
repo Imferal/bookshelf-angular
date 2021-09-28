@@ -1,0 +1,11 @@
+.card__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  list-style: none;
+}
+
+.card__item {
+  flex-basis: 400px;
+  flex-grow: 1;
+}

@@ -1,0 +1,66 @@
+@import "src/scss/variables";
+
+.card {
+  border: 1px dotted $bg-color-dark;
+
+  &__header {
+    display: flex;
+    background-color: $bg-color;
+    padding: 0.4rem 0.6rem;
+    justify-content: space-between;
+  }
+
+  &__year {
+    font-style: italic;
+  }
+
+  &__info {
+    display: grid;
+    gap: 1rem;
+    margin: 1rem;
+  }
+
+  &__author {
+    font-size: 1.1rem;
+  }
+
+  &__description {
+    font-style: italic;
+  }
+
+  &__genres {
+    display: flex;
+    gap: 0.4rem;
+    margin: 1rem;
+  }
+
+  &__genre {
+    font-size: 0.8rem;
+    font-style: italic;
+    background-color: $bg-color-light;
+    border: 1px solid $bg-color-dark;
+    border-radius: 6px;
+    padding: 0.1em 1em;
+  }
+
+  &__buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    margin: 1rem;
+  }
+
+  &__button {
+    font-size: 1rem;
+    color: $bg-color-dark;
+    font-style: italic;
+    font-weight: 400;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px dashed transparent;
+
+    &:hover {
+      border-bottom: 1px dashed $bg-color-dark;
+    }
+  }
+}
