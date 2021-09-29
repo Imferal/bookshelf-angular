@@ -35,12 +35,13 @@ import {NgSelectConfig} from "@ng-select/ng-select";
 })
 export class BookCardComponent implements OnInit {
   @Input() book!: Book;
+  @Input() genres!: Genre[]
+  @Output() edit = new EventEmitter<Book>()
   @Output() delete = new EventEmitter<number>()
 
   form!: FormGroup
-  genres!: Genre[]
   selectedGenres!: string[]
-  isEdit: boolean = true
+  isEdit: boolean = false
   isVisible!: boolean
 
   constructor(
@@ -60,10 +61,6 @@ export class BookCardComponent implements OnInit {
       genres: new FormControl(null, Validators.required),
       description: new FormControl(null),
     })
-    /** Подписка на литературные жанры */
-    this.bookState.genres$.pipe(untilDestroyed(this)).subscribe((genres$: Genre[]) => {
-      this.genres = genres$
-    })
     this.isVisible = true
     /** Формируем список выбранных жанров для режима редактирования */
     this.selectedGenres = this.book.genres.map((genre: Genre): string => genre.id)
@@ -77,15 +74,12 @@ export class BookCardComponent implements OnInit {
   }
 
   /** Изменение существующей книги */
-  submit() {
+  editBook() {
     /** Подготавливаем массив с жанрами */
     this.form.value.genres = this.form.value.genres.map((genre: String) => {
-      let i = this.genres.find(g => {
-        return genre === g.id
-      })
-      return i
+       return this.genres.find(g => genre === g.id)
     })
-    const formData = {...this.form.value, id: this.book.id}
-    this.bookState.editBook(formData)
+    /** Добавляем id и эмитим */
+    this.edit.emit({...this.form.value, id: this.book.id})
   }
 }

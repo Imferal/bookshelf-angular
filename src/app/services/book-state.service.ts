@@ -18,7 +18,6 @@ export class BookStateService extends StateService<BooksState> {
   /** Добавляем книгу в state */
   addBook(book: Book): void {
     this.setState({books: [...this.state.books, book]})
-    console.log('Книга добавлена: ', this.state.books)
   }
 
   /** Редактируем книгу */
@@ -27,7 +26,6 @@ export class BookStateService extends StateService<BooksState> {
       return book.id === editedBook.id ? editedBook: book
     })
     this.setState({books: [...editedBooks]})
-    console.log('Книга изменена: ', this.state.books)
   }
 
   /** Удаляем книгу из state */
@@ -35,6 +33,5 @@ export class BookStateService extends StateService<BooksState> {
     this.setState({
       books: [...this.state.books.filter(book => book.id !== id)]
     })
-    console.log('Книга удалена: ', this.state.books)
   }
 }

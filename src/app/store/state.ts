@@ -1,5 +1,5 @@
-import { BehaviorSubject, Observable } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 export class StateService<T> {
   /** Храним данные здесь */

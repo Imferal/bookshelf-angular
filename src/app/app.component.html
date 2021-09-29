@@ -5,6 +5,8 @@
     <li class="card__item" *ngFor="let book of books">
       <app-book-card
         [book]="book"
+        [genres]="genres"
+        (edit)="editBook($event)"
         (delete)="removeBook($event)"
         class="card__wrapper"
       ></app-book-card>

@@ -34,10 +34,10 @@
     >
       <ng-option
         *ngFor="let genre of genres"
-        value="{{genre.value}}"
+        value="{{genre.id}}"
         class="addBook-form__option"
       >
-        {{genre.id}}
+        {{genre.value}}
       </ng-option>
     </ng-select>
 

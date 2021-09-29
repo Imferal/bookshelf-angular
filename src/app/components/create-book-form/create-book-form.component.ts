@@ -44,7 +44,7 @@ export class CreateBookFormComponent implements OnInit {
   submit() {
     /** Подготавливаем массив с жанрами */
     this.form.value.genres = this.form.value.genres.map((genre: String) => {
-      return this.genres.find(g => genre === g.value)
+      return this.genres.find(g => genre === g.id)
     })
     /** Генерируем уникальный id */
     const formData = {...this.form.value, id: new Date().valueOf()}
