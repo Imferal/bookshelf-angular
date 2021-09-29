@@ -1,6 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {Book, BookStateService} from "./services/book-state.service";
+import {BookStateService} from "./services/book-state.service";
+import {Book} from "./models/BookState";
+import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 
+/** Отписка от стримов перед уничтожением компонента */
+@UntilDestroy()
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -15,9 +19,14 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.bookState.books$.subscribe((books$: Book[]) => {
+    this.bookState.books$.pipe(untilDestroyed(this)).subscribe((books$: Book[]) => {
       this.books = books$
     })
   }
+
+  removeBook(id: number): void {
+    this.bookState.removeBook(id)
+  }
+
 
 }

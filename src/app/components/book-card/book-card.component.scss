@@ -1,7 +1,11 @@
 @import "src/scss/variables";
 
 .card {
+  display: flex;
+  flex-direction: column;
+  position: relative;
   border: 1px dotted $bg-color-dark;
+  height: 100%;
 
   &__header {
     display: flex;
@@ -15,9 +19,12 @@
   }
 
   &__info {
-    display: grid;
+    display: flex;
     gap: 1rem;
+    flex-direction: column;
     margin: 1rem;
+    height: 8rem;
+    flex-grow: 1;
   }
 
   &__author {
@@ -26,6 +33,32 @@
 
   &__description {
     font-style: italic;
+    overflow-y: hidden;
+    max-height: 6.4rem;
+    position: relative;
+
+    &:hover {
+      top: calc(5.8rem + 2px);
+      position: absolute;
+      max-height: initial;
+      background-color: white;
+      width: calc(100% - 2rem);
+      z-index: 2;
+
+      &:after {
+        display: none;
+      }
+    }
+
+    &:after {
+      content: "";
+      display: block;
+      height: 2rem;
+      position: absolute;
+      width: 100%;
+      top: 4rem;
+      background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), #fff 75%)
+    }
   }
 
   &__genres {
@@ -58,9 +91,35 @@
     background-color: transparent;
     border: none;
     border-bottom: 1px dashed transparent;
+    cursor: pointer;
+
+    &:disabled {
+      cursor: not-allowed;
+      color: lightgray;
+    }
 
     &:hover {
       border-bottom: 1px dashed $bg-color-dark;
     }
+  }
+}
+
+.edit-book-form {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 0.4rem 0.6rem;
+
+  input,
+  textarea {
+    width: 100%;
+    resize: vertical;
+    transition: none;
+    overflow-y: hidden;
+    height: max-content;
+  }
+
+  textarea {
+    height: 7rem;
   }
 }

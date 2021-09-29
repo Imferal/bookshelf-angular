@@ -1,21 +1,98 @@
-<div class="card">
-  <div class="card__header">
-    <h3>{{book.name}}</h3>
-    <p class="card__year">{{
-      book.year < 0 ?
-        -book.year + ' г до н.э.':
-        book.year + ' г'
-      }}</p>
-  </div>
-  <div class="card__info">
-    <p class="card__author">{{book.author}}</p>
-    <div class="card__description">{{book.description}}</div>
-  </div>
-  <div class="card__genres">
-  <span class="card__genre" *ngFor="let genre of book.genres; index as i">{{genre}}</span>
-  </div>
+<div
+  class="card"
+  *ngIf="isVisible"
+  @show
+>
+  <div *ngIf="!isEdit else editBookForm">
+    <div class="card__header">
+      <h3 *ngIf="!isEdit">{{book.name}}</h3>
+      <p *ngIf="!isEdit" class="card__year">{{
+        book.year < 0 ?
+          -book.year + ' г до н.э.' :
+          book.year + ' г'
+        }}</p>
+    </div>
+    <div class="card__info">
+      <p class="card__author">{{book.author}}</p>
+      <div class="card__description">{{book.description}}</div>
+    </div>
+    <div class="card__genres">
+      <span class="card__genre" *ngFor="let genre of book.genres; index as i">{{genre.value}}</span>
+    </div>
     <div class="card__buttons">
-  <button class="card__button">Редактировать</button>
-  <button class="card__button card__button_delete">Удалить</button>
+      <button
+        class="card__button"
+        (click)="isEdit = !isEdit"
+      >
+        Редактировать
+      </button>
+      <button
+        class="card__button card__button_delete"
+        (click)="removeBook()"
+      >Удалить
+      </button>
+    </div>
   </div>
+  <ng-template #editBookForm>
+    <form class="edit-book-form" [formGroup]="form" (ngSubmit)="submit()">
+      <div class="form-control">
+        <input
+          type="text"
+          formControlName="name"
+          [ngModel]="book.name"
+        >
+        <div class="validation"></div>
+      </div>
+
+      <div class="form-control">
+        <input
+          type="text"
+          formControlName="author"
+          [ngModel]="book.author"
+        >
+        <div class="validation"></div>
+      </div>
+
+      <div class="form-control">
+        <ng-select
+          [ngModel]="selectedGenres"
+          formControlName="genres"
+          [multiple]="true"
+          [maxSelectedItems]=3
+          class="addBook-form__select"
+        >
+          <ng-option
+            *ngFor="let genre of genres"
+            value="{{genre.value}}"
+            class="addBook-form__option"
+          >
+            {{genre.id}}
+          </ng-option>
+        </ng-select>
+        <div class="validation"></div>
+      </div>
+
+      <div class="form-control">
+        <input
+          type="number"
+          formControlName="year"
+          [ngModel]="book.year"
+        >
+        <div class="validation"></div>
+      </div>
+
+      <div class="form-control">
+        <textarea
+          formControlName="description"
+          [ngModel]="book.description"
+        ></textarea>
+        <div class="validation"></div>
+      </div>
+
+      <div class="card__buttons">
+        <button class="card__button" type="button" (click)="isEdit = !isEdit">Отмена</button>
+        <button class="card__button" type="submit" [disabled]="form.invalid">Применить</button>
+      </div>
+    </form>
+  </ng-template>
 </div>

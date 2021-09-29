@@ -1,49 +1,63 @@
-<form class="addBook-form" [formGroup]="form" (ngSubmit)="submit()">
+<form class="add-book-form" [formGroup]="form" (ngSubmit)="submit()">
   <h1>Добавить книгу</h1>
 
   <div class="form-control">
-    <label>Название книги</label>
+    <label>
+      Название книги
     <input
       type="text"
-      placeholder="Название книги"
       formControlName="name"
     >
+    </label>
     <div class="validation"></div>
   </div>
 
   <div class="form-control">
-    <label>Автор</label>
+    <label>
+      Автор
     <input
       type="text"
-      placeholder="Автор"
       formControlName="author"
     >
+    </label>
     <div class="validation"></div>
   </div>
 
   <div class="form-control">
-    <label>Жанр</label>
-    <select formControlName="genre">
-      <option value="prose" selected>Проза</option>
-      <option value="poetry">Поэзия</option>
-    </select>
+    <label for="ng-select">Жанр</label>
+    <ng-select
+      id="ng-select"
+      formControlName="genres"
+      [multiple]="true"
+      [maxSelectedItems]=3
+      class="addBook-form__select"
+    >
+      <ng-option
+        *ngFor="let genre of genres"
+        value="{{genre.value}}"
+        class="addBook-form__option"
+      >
+        {{genre.id}}
+      </ng-option>
+    </ng-select>
+
     <div class="validation"></div>
   </div>
 
   <div class="form-control">
-    <label>Год</label>
+    <label>
+      Год
     <input
       type="number"
-      placeholder="Год"
       formControlName="year"
     >
+    </label>
     <div class="validation"></div>
   </div>
 
   <div class="form-control">
     <label>Описание</label>
     <textarea
-      placeholder="Описание"
       formControlName="description"
     ></textarea>
     <div class="validation"></div>

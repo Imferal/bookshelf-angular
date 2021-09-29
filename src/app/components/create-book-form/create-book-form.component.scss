@@ -1,6 +1,6 @@
 @import "src/scss/variables";
 
-.addBook-form {
+.add-book-form {
   h1 {
     text-align: center;
     background-color: $bg-color;
@@ -16,6 +16,8 @@
     gap: 0.2rem;
 
     & > label {
+      display: flex;
+      flex-direction: column;
       text-align: end;
       text-transform: uppercase;
       font-size: 0.7rem;
@@ -25,28 +27,7 @@
       resize: vertical;
     }
 
-    select {
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
-      padding: 0;
-    }
-
-    input,
-    select,
-    textarea {
-      padding: 0.2rem 0.4rem;
-      border: none;
-      border-bottom: 1px solid black;
-      background-color: transparent;
-
-      &::placeholder {
-        color: darkgray;
-      }
-    }
-
-    input,
-    select {
+    input{
       height: 1.5rem;
     }
   }
