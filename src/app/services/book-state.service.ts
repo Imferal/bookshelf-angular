@@ -8,6 +8,10 @@ import {initialState} from "../store/initialState";
   providedIn: 'root'
 })
 export class BookStateService extends StateService<BooksState> {
+  /** Создаём наблюдателей за состоянием нужных свойств в state */
+  /** Вова из прошлого пишет тебе, Вова из настоящего, пояснение для тупых: */
+  /** тут мы с помощью колбека достаём из стейта нужные свойства */
+  /** Мы просто мапим весь стейт, фильтруя его по нужному свойству */
   books$: Observable<Book[]> = this.select(state => state.books)
   genres$: Observable<Genre[]> = this.select(state => state.genres)
 
@@ -17,7 +21,7 @@ export class BookStateService extends StateService<BooksState> {
 
   /** Добавляем книгу в state */
   addBook(book: Book): void {
-    this.setState({books: [...this.state.books, book]})
+    this.setState({books: [book, ...this.state.books]})
   }
 
   /** Редактируем книгу */

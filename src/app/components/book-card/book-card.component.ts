@@ -5,6 +5,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {BookStateService} from "../../services/book-state.service";
 import {NgSelectConfig} from "@ng-select/ng-select";
+import {Utils} from "../../../utils";
 
 /** Отписка от стримов перед уничтожением компонента */
 @UntilDestroy()
@@ -76,10 +77,8 @@ export class BookCardComponent implements OnInit {
   /** Изменение существующей книги */
   editBook() {
     /** Подготавливаем массив с жанрами */
-    this.form.value.genres = this.form.value.genres.map((genre: String) => {
-       return this.genres.find(g => genre === g.id)
-    })
+    const genres = Utils.setBookGenres(this.form.value.genres, this.genres)
     /** Добавляем id и эмитим */
-    this.edit.emit({...this.form.value, id: this.book.id})
+    this.edit.emit({...this.form.value, id: this.book.id, genres})
   }
 }

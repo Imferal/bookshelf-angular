@@ -3,7 +3,8 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {BookStateService} from "../../services/book-state.service";
 import {Genre} from "../../models/BookState";
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
-import { NgSelectConfig } from '@ng-select/ng-select';
+import {NgSelectConfig} from '@ng-select/ng-select';
+import {Utils} from "../../../utils";
 
 /** Отписка от стримов перед уничтожением компонента */
 @UntilDestroy()
@@ -43,13 +44,8 @@ export class CreateBookFormComponent implements OnInit {
   /** Добавление новой книги */
   submit() {
     /** Подготавливаем массив с жанрами */
-    this.form.value.genres = this.form.value.genres.map((genre: String) => {
-      return this.genres.find(g => genre === g.id)
-    })
-    /** Генерируем уникальный id */
-    const formData = {...this.form.value, id: new Date().valueOf()}
-
-    console.log(formData)
-    this.bookState.addBook(formData)
+    const genres = Utils.setBookGenres(this.form.value.genres, this.genres)
+    /** Генерируем уникальный id и добавляем жанры */
+    this.bookState.addBook({...this.form.value, id: new Date().valueOf(), genres})
   }
 }
