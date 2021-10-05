@@ -1,28 +1,27 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { CreateBookFormComponent } from './components/create-book-form/create-book-form.component';
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import { BookCardComponent } from './components/book-card/book-card.component';
+import {NgModule} from '@angular/core';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {AuthorizationComponent} from './shared/components/authorization/authorization.component';
+import {BookDetailsModule} from "./modules/book-details/book-details.module";
+import {HomeModule} from "./modules/home/home.module";
+import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {NgSelectModule} from "@ng-select/ng-select";
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    CreateBookFormComponent,
-    BookCardComponent
+    AuthorizationComponent,
   ],
   imports: [
+    HomeModule,
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    NgSelectModule,
-    FormsModule,
-    ReactiveFormsModule,
+    BookDetailsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

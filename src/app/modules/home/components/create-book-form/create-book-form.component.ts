@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {BookStateService} from "../../services/book-state.service";
-import {Genre} from "../../models/BookState";
+import {BooksService} from "../../../../shared/services/books.service";
+import {Genre} from "../../../../models/BooksState";
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 import {NgSelectConfig} from '@ng-select/ng-select';
-import {Utils} from "../../../utils";
+import {Utils} from "../../../../../utils";
 
 /** Отписка от стримов перед уничтожением компонента */
 @UntilDestroy()
@@ -16,9 +16,10 @@ import {Utils} from "../../../utils";
 export class CreateBookFormComponent implements OnInit {
   form!: FormGroup
   genres!: Genre[]
+  isFormVisible: boolean = false
 
   constructor(
-    private bookState: BookStateService,
+    public books: BooksService,
     private config: NgSelectConfig,
   ) {
     this.config.notFoundText = 'Жанр не найден...';
@@ -35,10 +36,9 @@ export class CreateBookFormComponent implements OnInit {
       description: new FormControl(null),
     })
     /** Подписка на литературные жанры */
-    this.bookState.genres$.pipe(untilDestroyed(this)).subscribe((genres$: Genre[]) => {
+    this.books.genres$.pipe(untilDestroyed(this)).subscribe((genres$: Genre[]) => {
       this.genres = genres$
     })
-
   }
 
   /** Добавление новой книги */
@@ -46,6 +46,10 @@ export class CreateBookFormComponent implements OnInit {
     /** Подготавливаем массив с жанрами */
     const genres = Utils.setBookGenres(this.form.value.genres, this.genres)
     /** Генерируем уникальный id и добавляем жанры */
-    this.bookState.addBook({...this.form.value, id: new Date().valueOf(), genres})
+    this.books.addBook({...this.form.value, id: new Date().valueOf(), genres})
+  }
+
+  showForm() {
+    this.isFormVisible = !this.isFormVisible
   }
 }

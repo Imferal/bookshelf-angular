@@ -1,12 +1,23 @@
-@import "src/scss/variables";
+@import "../../../../../scss/variables";
 
 .add-book-form {
+  display: grid;
+  margin-bottom: 1rem;
+
   h1 {
     text-align: center;
     background-color: $bg-color;
     padding: 0.4rem 0;
     margin-bottom: 1rem;
     border-bottom: 1px solid black;
+  }
+
+  &__show-button {
+    height: 3rem;
+    width: 100%;
+    border: 0.2rem solid $bg-color-dark;
+    background-color: white;
+    margin-bottom: 1rem;
   }
 
   .form-control {
@@ -31,5 +42,9 @@
     input{
       height: 1.5rem;
     }
+  }
+
+  .button {
+    float: right;
   }
 }

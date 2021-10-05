@@ -1,9 +1,24 @@
 <div
   class="card"
   *ngIf="isVisible"
-  @show
+  [@show]="{
+    value: 'void => *',
+    params: {
+      randomDegShow: randomDegShow,
+      randomDegRemove: randomDegRemove,
+      randomXShow: randomXShow,
+      randomXRemove: randomXRemove,
+      randomYShow: randomYShow,
+      randomYRemove: randomYRemove
+      }
+    }"
 >
-  <div *ngIf="!isEdit else editBookForm">
+  <div
+    class="card__wrapper"
+    *ngIf="!isEdit else editBookForm"
+    (click)="showDetails(book.id)"
+    [routerLink]="['/book', book.id]"
+  >
     <div class="card__header">
       <h3 *ngIf="!isEdit">{{book.name}}</h3>
       <p *ngIf="!isEdit" class="card__year">{{
@@ -19,17 +34,22 @@
     <div class="card__genres">
       <span class="card__genre" *ngFor="let genre of book.genres; index as i">{{genre.value}}</span>
     </div>
-    <div class="card__buttons">
+    <div
+      *showAuthed="true"
+      class="card__buttons"
+    >
       <button
+        stop-propagation-directive
+        class="card__button card__button_delete"
+        (click)="removeBook()"
+      >Удалить
+      </button>
+      <button
+        stop-propagation-directive
         class="card__button"
         (click)="isEdit = !isEdit"
       >
         Редактировать
-      </button>
-      <button
-        class="card__button card__button_delete"
-        (click)="removeBook()"
-      >Удалить
       </button>
     </div>
   </div>
@@ -95,4 +115,7 @@
       </div>
     </form>
   </ng-template>
+  <div class="card__error" *showAuthed="false">
+    <p *ngIf="authError">Для перехода на страницу описания необходимо авторизоваться!</p>
+  </div>
 </div>

@@ -10,6 +10,7 @@ export interface Book {
 }
 
 export interface BooksState {
+  isAuth: boolean
   genres: Genre[]
   books: Book[]
 }

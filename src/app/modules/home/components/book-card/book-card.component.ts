@@ -1,11 +1,13 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {animate, style, transition, trigger} from "@angular/animations";
-import {Book, Genre} from "../../models/BookState";
+import {Book, Genre} from "../../../../models/BooksState";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
-import {BookStateService} from "../../services/book-state.service";
+import {BooksService} from "../../../../shared/services/books.service";
 import {NgSelectConfig} from "@ng-select/ng-select";
-import {Utils} from "../../../utils";
+import {Utils} from "../../../../../utils";
+import {AuthService} from 'src/app/shared/services/auth.service';
+import {ActivatedRoute, Params, Router} from "@angular/router";
 
 /** Отписка от стримов перед уничтожением компонента */
 @UntilDestroy()
@@ -16,7 +18,7 @@ import {Utils} from "../../../utils";
       transition('void => *', [
         style({
           opacity: 0,
-          transform: `translate(-350px,200px) scale(2) rotate(${Math.random() * 180 - 90}deg)`,
+          transform: `translate({{randomXShow}},{{randomYShow}}) scale(2) rotate({{randomDegShow}})`,
         }),
         animate('0.4s', style({
           opacity: 1,
@@ -26,7 +28,7 @@ import {Utils} from "../../../utils";
       transition('* => void', [
         animate('0.8s', style({
           opacity: 0,
-          transform: `translate(350px,-200px) scale(0.2) rotate(${Math.random() * 180 - 90 * 4}deg)`,
+          transform: `translate({{randomXRemove}},{{randomYRemove}}) scale(0.2) rotate({{randomDegRemove}})`,
         })),
       ]),
     ]),
@@ -36,17 +38,27 @@ import {Utils} from "../../../utils";
 })
 export class BookCardComponent implements OnInit {
   @Input() book!: Book;
-  @Input() genres!: Genre[]
   @Output() edit = new EventEmitter<Book>()
   @Output() delete = new EventEmitter<number>()
 
+  authError: boolean = false
   form!: FormGroup
+  genres!: Genre[]
   selectedGenres!: string[]
   isEdit: boolean = false
   isVisible!: boolean
+  randomDegShow!: string
+  randomDegRemove!: string
+  randomXShow!: string
+  randomXRemove!: string
+  randomYShow!: string
+  randomYRemove!: string
 
   constructor(
-    private bookState: BookStateService,
+    public bookState: BooksService,
+    private auth: AuthService,
+    private router: Router,
+    private route: ActivatedRoute,
     private config: NgSelectConfig,
   ) {
     this.config.notFoundText = 'Жанр не найден...';
@@ -63,8 +75,19 @@ export class BookCardComponent implements OnInit {
       description: new FormControl(null),
     })
     this.isVisible = true
+    this.randomDegShow = Math.random() * 180 - 90 + 'deg'
+    this.randomDegRemove = Math.random() * 720 - 360 + 'deg'
+    this.randomXShow = Math.random() * 700 - 250 + 'px'
+    this.randomXRemove = Math.random() * 700 - 250 + 'px'
+    this.randomYShow = Math.random() * 400 - 200 + 'px'
+    this.randomYRemove = Math.random() * 400 - 200 + 'px'
     /** Формируем список выбранных жанров для режима редактирования */
     this.selectedGenres = this.book.genres.map((genre: Genre): string => genre.id)
+    /** Подписка на литературные жанры */
+    this.bookState.genres$.pipe(untilDestroyed(this)).subscribe((genres$: Genre[]) => {
+      this.genres = genres$
+    })
+
   }
 
   removeBook() {
@@ -80,5 +103,16 @@ export class BookCardComponent implements OnInit {
     const genres = Utils.setBookGenres(this.form.value.genres, this.genres)
     /** Добавляем id и эмитим */
     this.edit.emit({...this.form.value, id: this.book.id, genres})
+  }
+
+  showDetails(id: number) {
+    this.auth.isAuth$.subscribe((isAuth: boolean) => {
+        if (isAuth) {
+          this.router.navigate(['/book/' + this.book.id])
+        } else {
+          this.authError = true
+        }
+      }
+    )
   }
 }

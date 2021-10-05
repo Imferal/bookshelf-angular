@@ -1,13 +1,13 @@
 import {Injectable} from '@angular/core';
-import {StateService} from "../store/state";
+import {StateService} from "../../store/state";
 import {Observable} from "rxjs";
-import {Book, BooksState, Genre} from "../models/BookState";
-import {initialState} from "../store/initialState";
+import {Book, BooksState, Genre} from "../../models/BooksState";
+import {initialState} from "../../store/initialState";
 
 @Injectable({
   providedIn: 'root'
 })
-export class BookStateService extends StateService<BooksState> {
+export class BooksService extends StateService<BooksState> {
   /** Создаём наблюдателей за состоянием нужных свойств в state */
   /** Вова из прошлого пишет тебе, Вова из настоящего, пояснение для тупых: */
   /** тут мы с помощью колбека достаём из стейта нужные свойства */
@@ -22,6 +22,11 @@ export class BookStateService extends StateService<BooksState> {
   /** Добавляем книгу в state */
   addBook(book: Book): void {
     this.setState({books: [book, ...this.state.books]})
+  }
+
+  /** Получаем книгу по id */
+  getBook(id: number): Book | undefined {
+    return this.state.books.find((book: Book) => id === book.id)
   }
 
   /** Редактируем книгу */

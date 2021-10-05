@@ -1,0 +1,10 @@
+<ul class="card__list">
+  <li class="card__item" *ngFor="let book of books.books$ | async">
+    <app-book-card
+      [book]="book"
+      (edit)="editBook($event)"
+      (delete)="removeBook($event)"
+      class="card__wrapper"
+    ></app-book-card>
+  </li>
+</ul>

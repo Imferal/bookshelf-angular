@@ -1,0 +1,30 @@
+@import "../../../../scss/variables";
+
+.header {
+  padding: 0.4rem 1rem;
+  line-height: 2rem;
+  background-color: $bg-color-dark;
+
+  &__restricted {
+    color: red;
+  }
+
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    color: white;
+
+    button {
+      border: none;
+      border-radius: 0;
+      background-color: $bg-color-light;
+      padding: 0 2rem;
+      font-style: italic;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $bg-color;
+      }
+    }
+  }
+}

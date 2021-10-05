@@ -1,6 +1,8 @@
-import {BooksState} from "../models/BookState";
+import { Utils } from "src/utils";
+import {BooksState} from "../models/BooksState";
 
 export const initialState: BooksState = {
+  isAuth: Utils.getAuthCookie('isAuth') === 'true',
   genres: [
     {id: 'Novel', value: 'Роман'},
     {id: 'Historical', value: 'Исторический жанр'},

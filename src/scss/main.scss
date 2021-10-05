@@ -40,11 +40,7 @@ textarea {
 .container {
   display: grid;
   margin: 0.5rem;
-  gap: 2rem 1rem;
-
-  @media screen and (min-width: 960px) {
-    grid-template-columns: 360px auto;
-  }
+  gap: 0.5rem;
 }
 
 .button {

@@ -1,0 +1,13 @@
+<header class="header">
+  <div *ngIf="(auth.isAuth$ | async) === false else authorized" class="header__container">
+    <p *ngIf="!restricted">Вы не авторизованы</p>
+    <button (click)="auth.setAuthStatus(true)">Войти</button>
+  </div>
+
+  <ng-template #authorized>
+    <div class="header__container">
+      <p>Вы авторизованы</p>
+      <button (click)="auth.setAuthStatus(false)">Выйти</button>
+    </div>
+  </ng-template>
+</header>

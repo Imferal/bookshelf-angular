@@ -1,13 +1,23 @@
-<form class="add-book-form" [formGroup]="form" (ngSubmit)="submit()">
-  <h1>Добавить книгу</h1>
+<button
+  class="button add-book-form__show-button"
+  (click)="showForm()"
+>
+  Добавить книгу
+</button>
 
+<form
+  *ngIf="isFormVisible"
+  class="add-book-form"
+  [formGroup]="form"
+  (ngSubmit)="submit()"
+>
   <div class="form-control">
     <label>
       Название книги
-    <input
-      type="text"
-      formControlName="name"
-    >
+      <input
+        type="text"
+        formControlName="name"
+      >
     </label>
     <div class="validation"></div>
   </div>
@@ -15,10 +25,10 @@
   <div class="form-control">
     <label>
       Автор
-    <input
-      type="text"
-      formControlName="author"
-    >
+      <input
+        type="text"
+        formControlName="author"
+      >
     </label>
     <div class="validation"></div>
   </div>
@@ -47,10 +57,10 @@
   <div class="form-control">
     <label>
       Год
-    <input
-      type="number"
-      formControlName="year"
-    >
+      <input
+        type="number"
+        formControlName="year"
+      >
     </label>
     <div class="validation"></div>
   </div>
@@ -63,6 +73,5 @@
     <div class="validation"></div>
   </div>
 
-  <button class="button" type="submit" [disabled]="form.invalid">Добавить</button>
-
+  <button class="button" type="submit" [disabled]="form.invalid">Сохранить</button>
 </form>

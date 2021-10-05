@@ -1,0 +1,33 @@
+<div *ngIf="book else notFound" class="book-detail">
+
+  <h2 class="book-detail__title">{{ book.name }}</h2>
+
+  <div class="book-detail__wrapper">
+    <p class="book-detail__field">
+      <span class="book-detail__field-name">id:</span>
+      {{ book.id }}
+    </p>
+    <p class="book-detail__field">
+      <span class="book-detail__field-name">Автор:</span>
+      {{ book.author }}
+    </p>
+    <p class="book-detail__field">
+      <span class="book-detail__field-name">Описание:</span>
+      {{ book.description }}
+    </p>
+    <p class="book-detail__field">
+      <span class="book-detail__field-name">Год публикации:</span>
+      {{ book.year < 0 ? -book.year + ' г до н.э.' : book.year + ' г' }}
+    </p>
+  </div>
+</div>
+
+<ng-template #notFound>
+  <div class="book-detail">
+    <h2>Книга не найдена</h2>
+
+
+  </div>
+</ng-template>
+
+<a class="book-detail__link" [routerLink]="['/']">Вернуться к списку книг</a>
