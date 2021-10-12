@@ -1,5 +1,5 @@
 <header class="header">
-  <div *ngIf="(auth.isAuth$ | async) === false else authorized" class="header__container">
+  <div *ngIf="(authQuery.isAuth$ | async) === false else authorized" class="header__container">
     <p *ngIf="!restricted">Вы не авторизованы</p>
     <button (click)="auth.setAuthStatus(true)">Войти</button>
   </div>

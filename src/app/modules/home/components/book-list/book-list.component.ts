@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {BooksService} from "../../../../shared/services/books.service";
-import {Book} from "../../../../models/BooksState";
+import {BooksService} from "../../../../store/books/books.service";
+import {Book} from "../../../../store/books/book.model";
+import {BooksQuery} from "../../../../store/books/books.query";
 
 @Component({
   selector: 'app-book-list',
@@ -10,18 +11,19 @@ import {Book} from "../../../../models/BooksState";
 export class BookListComponent implements OnInit {
 
   constructor(
-    public books: BooksService,
+    private booksService: BooksService,
+    public booksQuery: BooksQuery,
   ) { }
 
   ngOnInit(): void {
   }
 
   editBook(book: Book) {
-    this.books.editBook(book)
+    this.booksService.editBook(book)
   }
 
   removeBook(id: number): void {
-    this.books.removeBook(id)
+    this.booksService.removeBook(id)
   }
 
 }

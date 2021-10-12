@@ -16,7 +16,7 @@
   <div
     class="card__wrapper"
     *ngIf="!isEdit else editBookForm"
-    (click)="showDetails(book.id)"
+    (click)="showDetails()"
     [routerLink]="['/book', book.id]"
   >
     <div class="card__header">

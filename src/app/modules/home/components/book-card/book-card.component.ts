@@ -1,13 +1,16 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {animate, style, transition, trigger} from "@angular/animations";
-import {Book, Genre} from "../../../../models/BooksState";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
-import {BooksService} from "../../../../shared/services/books.service";
+import {BooksService} from "../../../../store/books/books.service";
 import {NgSelectConfig} from "@ng-select/ng-select";
 import {Utils} from "../../../../../utils";
-import {AuthService} from 'src/app/shared/services/auth.service';
-import {ActivatedRoute, Params, Router} from "@angular/router";
+import {AuthService} from 'src/app/store/auth/auth.service';
+import {ActivatedRoute, Router} from "@angular/router";
+import {GenresQuery} from "../../../../store/genres/genres.query";
+import {AuthQuery} from "../../../../store/auth/auth.query";
+import {Book} from "../../../../store/books/book.model";
+import { Genre } from 'src/app/store/genres/genre.model';
 
 /** Отписка от стримов перед уничтожением компонента */
 @UntilDestroy()
@@ -56,7 +59,9 @@ export class BookCardComponent implements OnInit {
 
   constructor(
     public bookState: BooksService,
+    private genresQuery: GenresQuery,
     private auth: AuthService,
+    private authQuery: AuthQuery,
     private router: Router,
     private route: ActivatedRoute,
     private config: NgSelectConfig,
@@ -84,7 +89,7 @@ export class BookCardComponent implements OnInit {
     /** Формируем список выбранных жанров для режима редактирования */
     this.selectedGenres = this.book.genres.map((genre: Genre): string => genre.id)
     /** Подписка на литературные жанры */
-    this.bookState.genres$.pipe(untilDestroyed(this)).subscribe((genres$: Genre[]) => {
+    this.genresQuery.genres$.pipe(untilDestroyed(this)).subscribe((genres$: Genre[]) => {
       this.genres = genres$
     })
 
@@ -93,7 +98,7 @@ export class BookCardComponent implements OnInit {
   removeBook() {
     this.isVisible = false
     setTimeout(() => {
-      this.delete.emit(this.book.id)
+      this.delete.emit(+this.book.id)
     }, 800)
   }
 
@@ -105,8 +110,8 @@ export class BookCardComponent implements OnInit {
     this.edit.emit({...this.form.value, id: this.book.id, genres})
   }
 
-  showDetails(id: number) {
-    this.auth.isAuth$.subscribe((isAuth: boolean) => {
+  showDetails() {
+    this.authQuery.isAuth$.subscribe((isAuth: boolean) => {
         if (isAuth) {
           this.router.navigate(['/book/' + this.book.id])
         } else {

@@ -1,8 +1,8 @@
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from "@angular/router";
 import {Observable} from "rxjs";
 import {Injectable} from "@angular/core";
-import {AuthService} from "./shared/services/auth.service";
 import {map} from "rxjs/operators";
+import {AuthQuery} from "./store/auth/auth.query";
 
 @Injectable({providedIn: 'root'})
 export class AuthGuard implements CanActivate {
@@ -10,7 +10,7 @@ export class AuthGuard implements CanActivate {
   authStatus!: boolean
 
   constructor(
-    private auth: AuthService,
+    private authQuery: AuthQuery,
     private router: Router,
   ) {
   }
@@ -18,7 +18,7 @@ export class AuthGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot, state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
-    return this.auth.isAuth$.pipe(
+    return this.authQuery.isAuth$.pipe(
       map((status: boolean) => {
         if (status) {
           return true

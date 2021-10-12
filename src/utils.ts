@@ -1,4 +1,5 @@
-import {Genre} from "./app/models/BooksState";
+import { Genre } from "./app/store/genres/genre.model";
+
 
 export class Utils {
   /** Конвертируем массив названий жанров в массив объектов название + id */

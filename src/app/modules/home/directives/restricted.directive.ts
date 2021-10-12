@@ -1,5 +1,6 @@
 import {Directive, Input, OnInit, TemplateRef, ViewContainerRef} from "@angular/core";
-import {AuthService} from "../../../shared/services/auth.service";
+import {AuthService} from "../../../store/auth/auth.service";
+import {AuthQuery} from "../../../store/auth/auth.query";
 
 @Directive({
   selector: '[showAuthed]'
@@ -9,7 +10,7 @@ export class RestrictedDirective implements OnInit {
   condition!: boolean
 
   constructor(
-    private auth: AuthService,
+    private authQuery: AuthQuery,
     private templateRef: TemplateRef<any>,
     private viewContainer: ViewContainerRef,
   ) {
@@ -20,7 +21,7 @@ export class RestrictedDirective implements OnInit {
   }
 
   ngOnInit() {
-    this.auth.isAuth$.subscribe(
+    this.authQuery.isAuth$.subscribe(
       (status) => {
         if(status && this.condition || !status && !this.condition) {
           this.viewContainer.createEmbeddedView(this.templateRef)

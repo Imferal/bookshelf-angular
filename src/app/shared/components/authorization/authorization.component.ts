@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {UntilDestroy} from "@ngneat/until-destroy";
-import {AuthService} from "../../services/auth.service";
+import {AuthService} from "../../../store/auth/auth.service";
+import {AuthQuery} from "../../../store/auth/auth.query";
 
 /** Отписка от стримов перед уничтожением компонента */
 @UntilDestroy()
@@ -15,6 +16,7 @@ export class AuthorizationComponent {
 
   constructor(
     public auth: AuthService,
+    public authQuery: AuthQuery,
   ) {
   }
 }

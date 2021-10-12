@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {BooksService} from "../../shared/services/books.service";
 import {ActivatedRoute, Params} from "@angular/router";
-import { Book } from '../../models/BooksState';
+import {BooksQuery} from "../../store/books/books.query";
+import {Book} from "../../store/books/book.model";
 
 @Component({
   selector: 'app-book-details',
@@ -12,14 +12,16 @@ export class BookDetailsComponent implements OnInit {
   book!: Book | undefined
 
   constructor(
-    private books: BooksService,
     private route: ActivatedRoute,
+    private booksQuery: BooksQuery
   ) {
   }
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
-      this.book = this.books.getBook(+params.bookId)
+      this.booksQuery.selectEntity(params.bookId).subscribe(book => {
+        this.book = book
+      })
     })
   }
 }

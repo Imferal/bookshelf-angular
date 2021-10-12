@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {BooksService} from "../../../../shared/services/books.service";
-import {Genre} from "../../../../models/BooksState";
+import {BooksService} from "../../../../store/books/books.service";
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 import {NgSelectConfig} from '@ng-select/ng-select';
 import {Utils} from "../../../../../utils";
+import {GenresQuery} from "../../../../store/genres/genres.query";
+import {Genre} from "../../../../store/genres/genre.model";
 
 /** Отписка от стримов перед уничтожением компонента */
 @UntilDestroy()
@@ -20,6 +21,7 @@ export class CreateBookFormComponent implements OnInit {
 
   constructor(
     public books: BooksService,
+    private genresQuery: GenresQuery,
     private config: NgSelectConfig,
   ) {
     this.config.notFoundText = 'Жанр не найден...';
@@ -36,7 +38,7 @@ export class CreateBookFormComponent implements OnInit {
       description: new FormControl(null),
     })
     /** Подписка на литературные жанры */
-    this.books.genres$.pipe(untilDestroyed(this)).subscribe((genres$: Genre[]) => {
+    this.genresQuery.genres$.pipe(untilDestroyed(this)).subscribe((genres$: Genre[]) => {
       this.genres = genres$
     })
   }

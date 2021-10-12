@@ -1,25 +1,21 @@
-import {Injectable} from '@angular/core';
-import {StateService} from "../../store/state";
 import {Observable} from "rxjs";
-import {BooksState} from "../../models/BooksState";
-import {initialState} from "../../store/initialState";
 import {Router} from "@angular/router";
+import {Injectable} from '@angular/core';
+import {BooksStore} from "../books/books.store";
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService extends StateService<BooksState> {
-  isAuth$: Observable<boolean> = this.select(state => state.isAuth)
+export class AuthService{
 
   constructor(
-    private router: Router
-  ) {
-    super(initialState)
-  }
+    private router: Router,
+    private bookStore: BooksStore
+  ) {}
 
   /** Переключить статус авторизации */
   setAuthStatus(status: boolean): void {
-    this.setState({isAuth: status})
+    this.bookStore.update({isAuth: status})
     /** Сохраняем в куки статус авторизации сроком на неделю */
     document.cookie = `isAuth=${status}; max-age=25200`
     /** Возврат на главную, если false */
