@@ -5,7 +5,7 @@ import {Genre} from "./genre.model";
 export interface GenresState extends EntityState<Genre> {
 }
 
-const initialState = {
+const genresInitialState = {
   genres: [
     {id: 'Novel', value: 'Роман'},
     {id: 'Historical', value: 'Исторический жанр'},
@@ -22,6 +22,6 @@ const initialState = {
 })
 export class GenresStore extends EntityStore<GenresState> {
   constructor() {
-    super(initialState);
+    super(genresInitialState);
   }
 }

@@ -6,7 +6,7 @@ import {Utils} from "../../../utils";
 export interface AuthState extends EntityState<IsAuth> {
 }
 
-const initialState = {
+const authInitialState = {
   isAuth: Utils.getAuthCookie('isAuth') === 'true',
 }
 
@@ -16,6 +16,6 @@ const initialState = {
 })
 export class AuthStore extends EntityStore<AuthState> {
   constructor() {
-    super(initialState);
+    super(authInitialState);
   }
 }

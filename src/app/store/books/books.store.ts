@@ -5,7 +5,7 @@ import {Book} from "./book.model";
 export interface BooksState extends EntityState<Book> {
 }
 
-const initialState = {
+const booksInitialState = {
   books: [
     {
       id: 1,
@@ -51,6 +51,6 @@ const initialState = {
 })
 export class BooksStore extends EntityStore<BooksState> {
   constructor() {
-    super(initialState);
+    super(booksInitialState);
   }
 }

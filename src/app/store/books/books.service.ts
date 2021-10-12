@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import { Book } from './book.model';
 import {BooksStore} from "./books.store";
 import {BooksQuery} from "./books.query";
-import {Subscription} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -10,24 +9,25 @@ import {Subscription} from "rxjs";
 export class BooksService {
 
   constructor(
-    private store: BooksStore,
+    private bookStore: BooksStore,
     private booksQuery: BooksQuery,
   ) {
   }
 
   /** Добавляем книгу  */
   addBook(book: Book): void {
-    this.store.add(book)
+    this.bookStore.add(book)
   }
 
   /** Редактируем книгу */
   editBook(book: Book): void {
-    this.store.update(book)
+    debugger
+    this.bookStore.update(book.id, book)
   }
 
   /** Удаляем книгу из state */
   removeBook(id: number): void {
-    this.store.remove(id)
+    this.bookStore.remove(id)
   }
 
   // /** Получаем книгу по id */
