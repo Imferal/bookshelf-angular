@@ -5,8 +5,7 @@ import {Book} from "./book.model";
 export interface BooksState extends EntityState<Book> {
 }
 
-const booksInitialState = {
-  books: [
+const booksInitialState = [
     {
       id: 1,
       name: 'Тихий Дон',
@@ -43,7 +42,6 @@ const booksInitialState = {
       genres: [{id: 'Epos', value: 'Эпос'}, {id: 'Poetry', value: 'Поэзия'}, {id: 'Epic', value: 'Эпопея'}]
     },
   ]
-}
 
 @Injectable({providedIn: 'root'})
 @StoreConfig({
@@ -51,6 +49,7 @@ const booksInitialState = {
 })
 export class BooksStore extends EntityStore<BooksState> {
   constructor() {
-    super(booksInitialState);
+    super();
+    this.set(booksInitialState)
   }
 }

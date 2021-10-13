@@ -6,7 +6,7 @@ import {Genre} from "./genre.model";
 
 @Injectable({providedIn: 'root'})
 export class GenresQuery extends QueryEntity<GenresState> {
-  genres$: Observable<Genre[]> = this.select(entity => entity.genres)
+  genres$: Observable<Genre[]> = this.selectAll()
 
   constructor(protected store: GenresStore) {
     super(store);

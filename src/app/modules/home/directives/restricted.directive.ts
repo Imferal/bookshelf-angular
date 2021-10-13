@@ -1,5 +1,4 @@
 import {Directive, Input, OnInit, TemplateRef, ViewContainerRef} from "@angular/core";
-import {AuthService} from "../../../store/auth/auth.service";
 import {AuthQuery} from "../../../store/auth/auth.query";
 
 @Directive({
@@ -31,5 +30,4 @@ export class RestrictedDirective implements OnInit {
       }
     )
   }
-
 }

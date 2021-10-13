@@ -6,9 +6,7 @@ import {Utils} from "../../../utils";
 export interface AuthState extends EntityState<IsAuth> {
 }
 
-const authInitialState = {
-  isAuth: Utils.getAuthCookie('isAuth') === 'true',
-}
+const status = Utils.getAuthCookie('isAuth') === 'true'
 
 @Injectable({providedIn: 'root'})
 @StoreConfig({
@@ -16,6 +14,6 @@ const authInitialState = {
 })
 export class AuthStore extends EntityStore<AuthState> {
   constructor() {
-    super(authInitialState);
+    super({isAuth: status});
   }
 }

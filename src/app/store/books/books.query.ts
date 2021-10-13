@@ -6,7 +6,7 @@ import {Book} from "./book.model";
 
 @Injectable({providedIn: 'root'})
 export class BooksQuery extends QueryEntity<BooksState> {
-  books$: Observable<Book[]> = this.select(entity => entity.books)
+  books$: Observable<Book[]> = this.selectAll()
 
   constructor(protected store: BooksStore) {
     super(store);

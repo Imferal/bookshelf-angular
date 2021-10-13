@@ -1,7 +1,5 @@
-import {Observable} from "rxjs";
 import {Router} from "@angular/router";
 import {Injectable} from '@angular/core';
-import {BooksStore} from "../books/books.store";
 import {AuthStore} from "./auth.store";
 
 @Injectable({

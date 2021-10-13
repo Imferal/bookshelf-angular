@@ -2,7 +2,6 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {animate, style, transition, trigger} from "@angular/animations";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
-import {BooksService} from "../../../../store/books/books.service";
 import {NgSelectConfig} from "@ng-select/ng-select";
 import {Utils} from "../../../../../utils";
 import {AuthService} from 'src/app/store/auth/auth.service';
@@ -58,7 +57,6 @@ export class BookCardComponent implements OnInit {
   randomYRemove!: string
 
   constructor(
-    public bookState: BooksService,
     private genresQuery: GenresQuery,
     private auth: AuthService,
     private authQuery: AuthQuery,
