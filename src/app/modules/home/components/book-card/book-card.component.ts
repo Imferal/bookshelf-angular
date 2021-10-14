@@ -3,13 +3,12 @@ import {animate, style, transition, trigger} from "@angular/animations";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {NgSelectConfig} from "@ng-select/ng-select";
-import {Utils} from "../../../../../utils";
 import {AuthService} from 'src/app/store/auth/auth.service';
 import {ActivatedRoute, Router} from "@angular/router";
 import {GenresQuery} from "../../../../store/genres/genres.query";
 import {AuthQuery} from "../../../../store/auth/auth.query";
 import {Book} from "../../../../store/books/book.model";
-import { Genre } from 'src/app/store/genres/genre.model';
+import {Genre} from 'src/app/store/genres/genre.model';
 
 /** Отписка от стримов перед уничтожением компонента */
 @UntilDestroy()
@@ -57,7 +56,7 @@ export class BookCardComponent implements OnInit {
   randomYRemove!: string
 
   constructor(
-    private genresQuery: GenresQuery,
+    public genresQuery: GenresQuery,
     private auth: AuthService,
     private authQuery: AuthQuery,
     private router: Router,
@@ -66,6 +65,8 @@ export class BookCardComponent implements OnInit {
   ) {
     this.config.notFoundText = 'Жанр не найден...';
     this.config.typeToSearchText = 'Начните вводить название жанра';
+    // this.config.bindValue="id"
+    // this.config.bindLabel="value"
   }
 
   ngOnInit(): void {
@@ -85,12 +86,16 @@ export class BookCardComponent implements OnInit {
     this.randomYShow = Math.random() * 400 - 200 + 'px'
     this.randomYRemove = Math.random() * 400 - 200 + 'px'
     /** Формируем список выбранных жанров для режима редактирования */
-    this.selectedGenres = this.book.genres.map((genre: Genre): string => genre.id)
+    // this.selectedGenres = this.book.genres.map((genre: Genre): string => genre.id)
+    this.genresQuery.selectMany(this.book.genreIds, ({id}) => id)
+      .pipe(untilDestroyed(this))
+      .subscribe((genres: string[]) => {
+        this.selectedGenres = genres
+      })
     /** Подписка на литературные жанры */
-    this.genresQuery.genres$.pipe(untilDestroyed(this)).subscribe((genres$: Genre[]) => {
-      this.genres = genres$
+    this.genresQuery.genres$.pipe(untilDestroyed(this)).subscribe((genres: Genre[]) => {
+      this.genres = genres
     })
-
   }
 
   removeBook() {
@@ -102,10 +107,15 @@ export class BookCardComponent implements OnInit {
 
   /** Изменение существующей книги */
   editBook() {
-    /** Подготавливаем массив с жанрами */
-    const genres = Utils.setBookGenres(this.form.value.genres, this.genres)
     /** Добавляем id и эмитим */
-    this.edit.emit({...this.form.value, id: this.book.id, genres})
+    this.edit.emit(({
+      id: this.book.id,
+      name: this.form.value.name,
+      author: this.form.value.author,
+      year: this.form.value.year,
+      description: this.form.value.description,
+      genreIds: this.form.value.genres,
+    }))
   }
 
   showDetails() {

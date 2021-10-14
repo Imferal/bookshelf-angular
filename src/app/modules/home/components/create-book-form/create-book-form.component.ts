@@ -38,17 +38,23 @@ export class CreateBookFormComponent implements OnInit {
       description: new FormControl(null),
     })
     /** Подписка на литературные жанры */
-    this.genresQuery.genres$.pipe(untilDestroyed(this)).subscribe((genres$: Genre[]) => {
-      this.genres = genres$
+    this.genresQuery.genres$.pipe(untilDestroyed(this)).subscribe((genres: Genre[]) => {
+      this.genres = genres
     })
   }
 
   /** Добавление новой книги */
   submit() {
-    /** Подготавливаем массив с жанрами */
-    const genres = Utils.setBookGenres(this.form.value.genres, this.genres)
-    /** Генерируем уникальный id и добавляем жанры */
-    this.books.addBook({...this.form.value, id: new Date().valueOf(), genres})
+    this.genresQuery.selectMany(this.form.value.genres)
+      .pipe(untilDestroyed(this))
+      .subscribe((genres: Genre[]) => {
+        /** Генерируем уникальный id и добавляем жанры */
+        this.books.addBook({
+          ...this.form.value,
+          id: new Date().valueOf(),
+          genreIds: this.form.controls.genres.value
+        })
+      })
   }
 
   showForm() {

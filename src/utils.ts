@@ -2,12 +2,12 @@ import { Genre } from "./app/store/genres/genre.model";
 
 
 export class Utils {
-  /** Конвертируем массив названий жанров в массив объектов название + id */
-  static setBookGenres(genreNames: string[], genres: Genre[]): Genre[] {
-    return genreNames.map((genre: string) => {
-      return genres.find((g: Genre) => genre === g.id)!
-    })
-  }
+  // /** Конвертируем массив названий жанров в массив объектов название + id */
+  // static setBookGenres(genreNames: string[], genres: Genre[]): Genre[] {
+  //   return genreNames.map((genre: string) => {
+  //     return genres.find((g: Genre) => genre === g.id)!
+  //   })
+  // }
 
   /** Получение значения куки по ключу */
   static getAuthCookie(name: string) {

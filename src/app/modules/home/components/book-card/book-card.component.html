@@ -32,7 +32,7 @@
       <div class="card__description">{{book.description}}</div>
     </div>
     <div class="card__genres">
-      <span class="card__genre" *ngFor="let genre of book.genres; index as i">{{genre.value}}</span>
+      <span class="card__genre" *ngFor="let genre of selectedGenres; index as i">{{genre}}</span>
     </div>
     <div
       *showAuthed="true"
@@ -79,10 +79,13 @@
           formControlName="genres"
           [multiple]="true"
           [maxSelectedItems]=3
+          [closeOnSelect]="false"
+          bindValue="id"
+          bindLabel="value"
           class="addBook-form__select"
         >
           <ng-option
-            *ngFor="let genre of genres"
+            *ngFor="let genre of genresQuery.genres$ | async"
             value="{{genre.id}}"
             class="addBook-form__option"
           >
