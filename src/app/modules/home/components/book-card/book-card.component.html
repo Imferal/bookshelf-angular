@@ -32,7 +32,7 @@
       <div class="card__description">{{book.description}}</div>
     </div>
     <div class="card__genres">
-      <span class="card__genre" *ngFor="let genre of selectedGenres; index as i">{{genre}}</span>
+      <span class="card__genre" *ngFor="let genre of bookGenres; index as i">{{genre}}</span>
     </div>
     <div
       *showAuthed="true"

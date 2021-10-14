@@ -45,6 +45,7 @@ export class BookCardComponent implements OnInit {
   authError: boolean = false
   form!: FormGroup
   genres!: Genre[]
+  bookGenres!: string[]
   selectedGenres!: string[]
   isEdit: boolean = false
   isVisible!: boolean
@@ -86,11 +87,16 @@ export class BookCardComponent implements OnInit {
     this.randomYShow = Math.random() * 400 - 200 + 'px'
     this.randomYRemove = Math.random() * 400 - 200 + 'px'
     /** Формируем список выбранных жанров для режима редактирования */
-    // this.selectedGenres = this.book.genres.map((genre: Genre): string => genre.id)
     this.genresQuery.selectMany(this.book.genreIds, ({id}) => id)
       .pipe(untilDestroyed(this))
       .subscribe((genres: string[]) => {
         this.selectedGenres = genres
+      })
+    /** Формируем список выбранных жанров для режима просмотра */
+    this.genresQuery.selectMany(this.book.genreIds, ({value}) => value)
+      .pipe(untilDestroyed(this))
+      .subscribe((genres: string[]) => {
+        this.bookGenres = genres
       })
     /** Подписка на литературные жанры */
     this.genresQuery.genres$.pipe(untilDestroyed(this)).subscribe((genres: Genre[]) => {
