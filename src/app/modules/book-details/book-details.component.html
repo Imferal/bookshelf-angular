@@ -18,7 +18,7 @@
     <p class="book-detail__field">
       <span class="book-detail__field-name">Год публикации:</span>
       <span *ngIf="book!.year < 0 else AD">
-        -{{book!.year + ' г до н.э.'}}
+        {{book!.year + ' г до н.э.'}}
       </span>
       <ng-template #AD>
         {{book!.year + ' г'}}
