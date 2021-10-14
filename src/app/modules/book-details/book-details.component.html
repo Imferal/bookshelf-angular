@@ -1,23 +1,28 @@
-<div *ngIf="book else notFound" class="book-detail">
+<div *ngIf="(book$ | async) as book else notFound" class="book-detail">
 
-  <h2 class="book-detail__title">{{ book.name }}</h2>
+  <h2 class="book-detail__title">{{ (book$ | async)?.name }}</h2>
 
   <div class="book-detail__wrapper">
     <p class="book-detail__field">
       <span class="book-detail__field-name">id:</span>
-      {{ book.id }}
+      {{ book?.id  }}
     </p>
     <p class="book-detail__field">
       <span class="book-detail__field-name">Автор:</span>
-      {{ book.author }}
+      {{ book?.author }}
     </p>
     <p class="book-detail__field">
       <span class="book-detail__field-name">Описание:</span>
-      {{ book.description }}
+      {{ book?.description }}
     </p>
     <p class="book-detail__field">
       <span class="book-detail__field-name">Год публикации:</span>
-      {{ book.year < 0 ? -book.year + ' г до н.э.' : book.year + ' г' }}
+      <span *ngIf="(book$ | async)!.year < 0 else AD">
+        -{{book!.year + ' г до н.э.'}}
+      </span>
+      <ng-template #AD>
+        {{book!.year + ' г'}}
+      </ng-template>
     </p>
   </div>
 </div>

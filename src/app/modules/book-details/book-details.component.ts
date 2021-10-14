@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Params} from "@angular/router";
 import {BooksQuery} from "../../store/books/books.query";
 import {Book} from "../../store/books/book.model";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-book-details',
@@ -9,7 +10,7 @@ import {Book} from "../../store/books/book.model";
   styleUrls: ['./book-details.component.scss']
 })
 export class BookDetailsComponent implements OnInit {
-  book!: Book | undefined
+  book$!: Observable<Book | undefined>
 
   constructor(
     private route: ActivatedRoute,
@@ -19,9 +20,7 @@ export class BookDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
-      this.booksQuery.selectEntity(params.bookId).subscribe(book => {
-        this.book = book
-      })
+      this.book$ = this.booksQuery.selectEntity(params.bookId)
     })
   }
 }

@@ -66,8 +66,6 @@ export class BookCardComponent implements OnInit {
   ) {
     this.config.notFoundText = 'Жанр не найден...';
     this.config.typeToSearchText = 'Начните вводить название жанра';
-    // this.config.bindValue="id"
-    // this.config.bindLabel="value"
   }
 
   ngOnInit(): void {
