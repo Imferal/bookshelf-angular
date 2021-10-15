@@ -10,14 +10,14 @@ import {map} from "rxjs/operators";
 @Injectable({providedIn: 'root'})
 export class BooksQuery extends QueryEntity<BooksState> implements OnInit {
   books$: Observable<Book[]> = this.selectAll()
-  combinedStream: Observable<Book[]> = combineLatest(this.books$, this.genresQuery.genres$)
+  combinedStream: Observable<Book[]> = combineLatest(this.books$(ф), this.genresQuery.genres$)
     .pipe(
-      map(res => {
-        debugger
-        return res[0].map(book => {
-          book.genres = res[1].filter(genre => book.genreIds.includes(genre.id))
-          debugger
-          return book
+      map(([books, genres]) => {
+        return books.map(book => {
+          return {
+            ...book,
+            genres: genres.filter(genre => book.genreIds.includes(genre.id))
+          }
         })
       })
     )
