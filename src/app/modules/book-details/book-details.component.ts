@@ -25,10 +25,7 @@ export class BookDetailsComponent implements OnInit {
       this.book$ = this.booksQuery.selectEntity(params.bookId)
     })
 
-    this.booksQuery.combinedStream.subscribe(([books, genres]) => {
-      books.forEach((book) => {
-        book.genres = genres.filter(genre => book.genreIds.includes(genre.id))
-      })
+    this.booksQuery.combinedStream.subscribe(([books]) => {
       this.combined = `Книги с жанрами: ${JSON.stringify(books)}`
     })
   }
