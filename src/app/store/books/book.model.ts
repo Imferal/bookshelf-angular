@@ -1,4 +1,5 @@
 import {ID} from "@datorama/akita";
+import { Genre } from "../genres/genre.model";
 
 export interface Book {
   id: ID,
@@ -6,7 +7,8 @@ export interface Book {
   year: number,
   author: string,
   description?: string,
-  genreIds: Array<string>
+  genres?: Genre[],
+  genreIds: Array<string>,
 }
 
 export function createBook(params: Partial<Book>) {

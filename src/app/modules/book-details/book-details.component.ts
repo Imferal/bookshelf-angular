@@ -3,6 +3,7 @@ import {ActivatedRoute, Params} from "@angular/router";
 import {BooksQuery} from "../../store/books/books.query";
 import {Book} from "../../store/books/book.model";
 import {Observable} from "rxjs";
+import {Genre} from 'src/app/store/genres/genre.model';
 
 @Component({
   selector: 'app-book-details',
@@ -11,6 +12,7 @@ import {Observable} from "rxjs";
 })
 export class BookDetailsComponent implements OnInit {
   book$!: Observable<Book | undefined>
+  combined!: string
 
   constructor(
     private route: ActivatedRoute,
@@ -21,6 +23,13 @@ export class BookDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
       this.book$ = this.booksQuery.selectEntity(params.bookId)
+    })
+
+    this.booksQuery.combinedStream.subscribe(([books, genres]) => {
+      books.forEach((book) => {
+        book.genres = genres.filter(genre => book.genreIds.includes(genre.id))
+      })
+      this.combined = `Книги с жанрами: ${JSON.stringify(books)}`
     })
   }
 }

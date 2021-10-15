@@ -44,7 +44,6 @@ export class BookCardComponent implements OnInit {
 
   authError: boolean = false
   form!: FormGroup
-  genres!: Genre[]
   bookGenres!: string[]
   selectedGenres!: string[]
   isEdit: boolean = false
@@ -96,10 +95,6 @@ export class BookCardComponent implements OnInit {
       .subscribe((genres: string[]) => {
         this.bookGenres = genres
       })
-    /** Подписка на литературные жанры */
-    this.genresQuery.genres$.pipe(untilDestroyed(this)).subscribe((genres: Genre[]) => {
-      this.genres = genres
-    })
   }
 
   removeBook() {
