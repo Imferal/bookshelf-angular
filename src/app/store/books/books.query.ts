@@ -71,7 +71,7 @@ export class BooksQuery extends QueryEntity<BooksState> {
       })
     }
 
-    /** Фильтрация по жанру */
+    /** Фильтрация по жанру   */
     if (filterParams.genreIds) {
       books = books.filter(book => {
         return filterParams.genreIds!.every(genreId => book.genreIds.includes(genreId))
