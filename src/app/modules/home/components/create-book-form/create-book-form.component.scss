@@ -20,29 +20,6 @@
     margin-bottom: 1rem;
   }
 
-  .form-control {
-    display: flex;
-    flex-direction: column;
-    margin: 0.6rem 0;
-    gap: 0.2rem;
-
-    & > label {
-      display: flex;
-      flex-direction: column;
-      text-align: end;
-      text-transform: uppercase;
-      font-size: 0.7rem;
-    }
-
-    textarea {
-      resize: vertical;
-      transition: none;
-    }
-
-    input{
-      height: 1.5rem;
-    }
-  }
 
   .button {
     float: right;

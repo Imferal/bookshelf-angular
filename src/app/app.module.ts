@@ -9,7 +9,6 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {environment} from "../environments/environment";
 import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
 
-
 @NgModule({
   declarations: [
     AppComponent,

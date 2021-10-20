@@ -12,7 +12,7 @@ import {Genre} from 'src/app/store/genres/genre.model';
 })
 export class BookDetailsComponent implements OnInit {
   book$!: Observable<Book | undefined>
-  combined!: string
+  // combined!: string
 
   constructor(
     private route: ActivatedRoute,
@@ -25,8 +25,8 @@ export class BookDetailsComponent implements OnInit {
       this.book$ = this.booksQuery.selectEntity(params.bookId)
     })
 
-    this.booksQuery.combinedStream.subscribe(([books]) => {
-      this.combined = `Книги с жанрами: ${JSON.stringify(books)}`
-    })
+    // this.booksQuery.combinedStream.subscribe(([books]) => {
+    //   this.combined = `Книги с жанрами: ${JSON.stringify(books)}`
+    // })
   }
 }

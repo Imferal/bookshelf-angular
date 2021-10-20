@@ -1,8 +1,12 @@
 import {EntityState, EntityStore, StoreConfig} from "@datorama/akita";
 import {Injectable} from "@angular/core";
-import {Book} from "./book.model";
+import {Book, FilterParams} from "./book.model";
 
 export interface BooksState extends EntityState<Book> {
+}
+
+const filterInitialState = {
+  filterParams: {}
 }
 
 const booksInitialState = [
@@ -46,7 +50,7 @@ const booksInitialState = [
 })
 export class BooksStore extends EntityStore<BooksState> {
   constructor() {
-    super();
+    super(filterInitialState);
     this.set(booksInitialState)
   }
 }

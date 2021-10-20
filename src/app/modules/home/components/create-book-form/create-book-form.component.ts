@@ -3,7 +3,6 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {BooksService} from "../../../../store/books/books.service";
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 import {NgSelectConfig} from '@ng-select/ng-select';
-import {Utils} from "../../../../../utils";
 import {GenresQuery} from "../../../../store/genres/genres.query";
 import {Genre} from "../../../../store/genres/genre.model";
 
@@ -16,12 +15,12 @@ import {Genre} from "../../../../store/genres/genre.model";
 })
 export class CreateBookFormComponent implements OnInit {
   form!: FormGroup
-  genres!: Genre[]
+  // genres!: Genre[]
   isFormVisible: boolean = false
 
   constructor(
     public books: BooksService,
-    private genresQuery: GenresQuery,
+    public genresQuery: GenresQuery,
     private config: NgSelectConfig,
   ) {
     this.config.notFoundText = 'Жанр не найден...';
@@ -38,9 +37,9 @@ export class CreateBookFormComponent implements OnInit {
       description: new FormControl(null),
     })
     /** Подписка на литературные жанры */
-    this.genresQuery.genres$.pipe(untilDestroyed(this)).subscribe((genres: Genre[]) => {
-      this.genres = genres
-    })
+    // this.genresQuery.genres$.pipe(untilDestroyed(this)).subscribe((genres: Genre[]) => {
+    //   this.genres = genres
+    // })
   }
 
   /** Добавление новой книги */

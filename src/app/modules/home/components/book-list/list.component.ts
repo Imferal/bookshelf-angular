@@ -5,10 +5,11 @@ import {BooksQuery} from "../../../../store/books/books.query";
 
 @Component({
   selector: 'app-book-list',
-  templateUrl: './book-list.component.html',
-  styleUrls: ['./book-list.component.scss']
+  templateUrl: './list.component.html',
+  styleUrls: ['./list.component.scss']
 })
-export class BookListComponent implements OnInit {
+export class ListComponent implements OnInit {
+books!: Book[]
 
   constructor(
     private booksService: BooksService,
@@ -16,6 +17,10 @@ export class BookListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.booksQuery.filteredBooksWithGenres.subscribe((books ) => {
+      // debugger
+      this.books = books
+    })
   }
 
   editBook(book: Book) {
@@ -25,5 +30,4 @@ export class BookListComponent implements OnInit {
   removeBook(id: number): void {
     this.booksService.removeBook(id)
   }
-
 }

@@ -1,26 +1,16 @@
 <button
-  class="button add-book-form__show-button"
+  class="button search-book-form__show-button"
   (click)="showForm()"
 >
-  Добавить книгу
+  Искать книгу
 </button>
 
 <form
   *ngIf="isFormVisible"
-  class="add-book-form"
+  class="search-book-form"
   [formGroup]="form"
-  (ngSubmit)="submit()"
+  (ngSubmit)="booksService.setFilterParams(form.value)"
 >
-  <div class="form-control">
-    <label>
-      Название книги
-      <input
-        type="text"
-        formControlName="name"
-      >
-    </label>
-    <div class="validation"></div>
-  </div>
 
   <div class="form-control">
     <label>
@@ -30,14 +20,13 @@
         formControlName="author"
       >
     </label>
-    <div class="validation"></div>
   </div>
 
   <div class="form-control">
     <label for="ng-select">Жанр</label>
     <ng-select
       id="ng-select"
-      formControlName="genres"
+      formControlName="genreIds"
       [multiple]="true"
       [maxSelectedItems]=3
       class="addBook-form__select"
@@ -56,22 +45,31 @@
 
   <div class="form-control">
     <label>
-      Год
+      Год от
       <input
         type="number"
-        formControlName="year"
+        formControlName="yearFrom"
       >
     </label>
-    <div class="validation"></div>
   </div>
 
   <div class="form-control">
-    <label>Описание</label>
+    <label>
+      Год до
+      <input
+        type="number"
+        formControlName="yearTo"
+      >
+    </label>
+  </div>
+
+  <div class="form-control">
+    <label>Название или описание</label>
     <textarea
-      formControlName="description"
+      formControlName="text"
     ></textarea>
     <div class="validation"></div>
   </div>
 
-  <button class="button" type="submit" [disabled]="form.invalid">Сохранить</button>
+  <button class="button" type="submit">Искать</button>
 </form>

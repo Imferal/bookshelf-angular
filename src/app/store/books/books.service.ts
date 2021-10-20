@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import { Book } from './book.model';
+import {Book, FilterParams} from './book.model';
 import {BooksStore} from "./books.store";
 
 @Injectable({
@@ -25,5 +25,10 @@ export class BooksService {
   /** Удаляем книгу из state */
   removeBook(id: number): void {
     this.bookStore.remove(id)
+  }
+
+  /** Устанавливаем параметры фильтрации */
+  setFilterParams(filterParams: FilterParams): void {
+    this.bookStore.update({filterParams})
   }
 }

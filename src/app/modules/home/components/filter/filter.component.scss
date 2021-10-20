@@ -1,0 +1,14 @@
+@import "../../../../../scss/variables";
+
+.search-book-form {
+  display: grid;
+  margin-bottom: 1rem;
+
+&__show-button {
+  height: 3rem;
+  width: 100%;
+  border: 0.2rem solid $bg-color-dark;
+  background-color: white;
+  margin-bottom: 1rem;
+}
+}

@@ -1,5 +1,5 @@
 <ul class="card__list">
-  <li class="card__item" *ngFor="let book of booksQuery.books$ | async">
+  <li class="card__item" *ngFor="let book of books">
     <app-book-card
       [book]="book"
       (edit)="editBook($event)"
