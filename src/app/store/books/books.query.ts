@@ -5,6 +5,7 @@ import {Injectable} from "@angular/core";
 import {Book, FilterParams} from "./book.model";
 import {GenresQuery} from "../genres/genres.query";
 import {map} from "rxjs/operators";
+import {Utils} from "../../../utils";
 
 @Injectable({providedIn: 'root'})
 export class BooksQuery extends QueryEntity<BooksState> {
@@ -42,42 +43,14 @@ export class BooksQuery extends QueryEntity<BooksState> {
   }
 
   getFilteredBooks(books: Book[], filterParams: FilterParams): Book[] {
-    /** Фильтрация по вхождению */
-    if (filterParams.text) {
-      books = books.filter(book => {
-        return book.name.toLocaleLowerCase().includes(filterParams.text!.toLocaleLowerCase().trim()) ||
-        book.description?.toLocaleLowerCase().includes(filterParams.text!.toLocaleLowerCase().trim())
-      })
-    }
-
-    /** Фильтрация по автору */
-    if (filterParams.author) {
-      books = books.filter(book => {
-        return book.author.toLocaleLowerCase().includes(filterParams.author!.toLocaleLowerCase().trim())
-      })
-    }
-
-    /** Фильтрация по году от */
-    if (filterParams.yearFrom || filterParams.yearFrom === 0) {
-      books = books.filter(book => {
-        return book.year >= filterParams.yearFrom!
-      })
-    }
-
-    /** Фильтрация по году до */
-    if (filterParams.yearTo || filterParams.yearTo === 0) {
-      books = books.filter(book => {
-        return book.year <= filterParams.yearTo!
-      })
-    }
-
-    /** Фильтрация по жанру   */
-    if (filterParams.genreIds) {
-      books = books.filter(book => {
-        return filterParams.genreIds!.every(genreId => book.genreIds.includes(genreId))
-      })
-    }
-
-    return books
+    return books.filter((book) => {
+      return !!(
+        Utils.textFilter(book, filterParams) &&
+        Utils.authorFilter(book, filterParams) &&
+        Utils.dateFromFilter(book, filterParams) &&
+        Utils.dateToFilter(book, filterParams) &&
+        Utils.genreFilter(book, filterParams)
+      )
+    })
   }
 }
