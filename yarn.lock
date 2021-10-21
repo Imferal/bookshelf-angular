@@ -1714,6 +1714,13 @@ ajv@^6.1.0, ajv@^6.12.3, ajv@^6.12.4, ajv@^6.12.5:
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
 
+akita-filters-plugin@^6.0.1:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/akita-filters-plugin/-/akita-filters-plugin-6.0.1.tgz#d32e3a908cdb4a9cc4fad955b390106497184faa"
+  integrity sha512-NJR+wcJLR/PsnzZx5eZK83xzPmnh+tWDHWNIe4JbJfWqa9Ng27xpLT1+OD7HUnhzh2Jtf3/JSHJwnFR7osBevA==
+  dependencies:
+    tslib "^2.0.0"
+
 alphanum-sort@^1.0.2:
   version "1.0.2"
   resolved "https://registry.npmjs.org/alphanum-sort/-/alphanum-sort-1.0.2.tgz"

@@ -27,7 +27,6 @@ export class BooksQuery extends QueryEntity<BooksState> {
         })
       })
     )
-
   filteredBooksWithGenres: Observable<Book[]> = combineLatest([
     this.combinedStream,
     this.filter$,

@@ -1,7 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BooksService} from "../../../../store/books/books.service";
 import {Book} from "../../../../store/books/book.model";
 import {BooksQuery} from "../../../../store/books/books.query";
+import {BooksState} from "../../../../store/books/books.store";
+import {AkitaFilterLocal} from "akita-filters-plugin";
+import { Observable } from 'rxjs';
+import {BooksFilterService} from "../../../../shared/services/books-filter.service";
 
 @Component({
   selector: 'app-book-list',
@@ -9,18 +13,20 @@ import {BooksQuery} from "../../../../store/books/books.query";
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
-books!: Book[]
+  books!: Book[]
+  public filters$!: Observable<AkitaFilterLocal<Book, BooksState>[]>;
 
   constructor(
     private booksService: BooksService,
     public booksQuery: BooksQuery,
-  ) { }
+    private booksFilter: BooksFilterService,
+  ) {
+  }
 
   ngOnInit(): void {
-    this.booksQuery.filteredBooksWithGenres.subscribe((books ) => {
-      // debugger
-      this.books = books
-    })
+      this.booksFilter.selectAll().subscribe(books => {
+        this.books = books as Book[]
+      })
   }
 
   editBook(book: Book) {

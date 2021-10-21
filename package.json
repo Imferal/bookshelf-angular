@@ -22,6 +22,7 @@
     "@datorama/akita-ngdevtools": "^6.0.1",
     "@ng-select/ng-select": "^7.3.0",
     "@ngneat/until-destroy": "^8.1.4",
+    "akita-filters-plugin": "^6.0.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",
     "yarn": "^1.22.15",
